@@ -21,6 +21,14 @@ A powerful browser automation and testing server using the Model Context Protoco
 
 ## 🚀 Quick Start
 
+### Installing via Smithery
+
+To install autospectra-mcp-server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@samuelvinay91/autospectra-mcp-server):
+
+```bash
+npx -y @smithery/cli install @samuelvinay91/autospectra-mcp-server --client claude
+```
+
 ### Local Development
 
 ```bash
