@@ -1,5 +1,7 @@
 # Smithery AI Integration Guide for AutoSpectra MCP Server
 
+[![smithery badge](https://smithery.ai/badge/@samuelvinay91/autospectra-mcp-server)](https://smithery.ai/server/@samuelvinay91/autospectra-mcp-server)
+
 This guide provides detailed instructions for integrating AutoSpectra MCP Server with Smithery AI, allowing AI agents to leverage advanced browser automation and testing capabilities.
 
 ## Overview

@@ -1,5 +1,7 @@
 # Cloud Deployment Guide for AutoSpectra MCP Server
 
+[![smithery badge](https://smithery.ai/badge/@samuelvinay91/autospectra-mcp-server)](https://smithery.ai/server/@samuelvinay91/autospectra-mcp-server)
+
 This guide provides step-by-step instructions for deploying the AutoSpectra MCP Server to a free cloud provider (Render.com) and integrating it with Smithery AI.
 
 ## Prerequisites
@@ -15,12 +17,14 @@ This guide provides step-by-step instructions for deploying the AutoSpectra MCP 
 ```bash
 git init
 git add .
-git commit -m "Initial commit for cloud deployment"
+git branch -M main
 git remote add origin YOUR_GITHUB_REPOSITORY_URL
 git push -u origin main
 ```
 
 ## Step 2: Deploy to Render.com
+
+### Option A: Manual Deployment
 
 1. Log in to [Render.com](https://render.com)
 2. Click on "New" and select "Web Service"
@@ -42,6 +46,51 @@ git push -u origin main
 6. Click "Create Web Service"
 
 Render will automatically deploy your application. Once deployment is complete, you'll receive a URL for your service (e.g., `https://autospectra-mcp-server.onrender.com`).
+
+### Option B: Automated Deployment with GitHub Actions
+
+For continuous deployment with GitHub Actions, follow these steps:
+
+1. Generate a Render API key:
+   - In Render dashboard, go to Account Settings → API Keys
+   - Click "New API Key", provide a name, and copy the generated key
+
+2. Find your Render Service ID:
+   - Go to your service dashboard
+   - The service ID is the last part of the URL (e.g., `srv-abcdefghijkl`)
+
+3. Add secrets to your GitHub repository:
+   - Go to your GitHub repository → Settings → Secrets and variables → Actions
+   - Add two secrets:
+     - `RENDER_API_KEY`: Your Render API key
+     - `RENDER_SERVICE_ID`: Your Render service ID
+
+4. The deployment will automatically trigger when:
+   - You push to the `main` branch (deploys to staging environment)
+   - You create a new tag with format `v*` (deploys to production environment)
+
+5. The GitHub Action workflow will:
+   - Run tests
+   - Build the project
+   - Deploy to Render
+   - Verify the deployment is healthy
+   - For tagged releases, create a GitHub Release with auto-generated changelogs
+
+#### Deployment Environments
+
+The GitHub Actions workflow handles two deployment scenarios:
+
+- **Main Branch Pushes**: Deployed as staging
+- **Tagged Releases**: Deployed as production with a GitHub Release created automatically
+
+To create a tagged release:
+```bash
+# First update the version
+git tag v1.0.1  # Use semantic versioning
+git push origin v1.0.1
+```
+
+You can also use the "Semantic Versioning" GitHub Action to automate version updates.
 
 ## Step 3: Test Your Deployment
 
