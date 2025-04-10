@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: autospectra-mcp-server
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: NODE_ENV=production npm start
+    envVars:
+      - key: PORT
+        value: "8080"
+      - key: DEBUG
+        value: "false"
+      - key: HEADLESS
+        value: "true"
+      - key: SLOW_MO
+        value: "0"
+      - key: OUTPUT_DIR
+        value: "./output"
+    healthCheckPath: /health
