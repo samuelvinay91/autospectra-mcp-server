@@ -4,6 +4,7 @@
 [![Documentation](https://github.com/autospectra/autospectra-mcp-server/actions/workflows/docs.yml/badge.svg)](https://github.com/autospectra/autospectra-mcp-server/actions/workflows/docs.yml)
 [![Render](https://img.shields.io/badge/Deploy-Render-cyan)](https://render.com)
 [![Smithery AI](https://img.shields.io/badge/Integration-Smithery%20AI-blueviolet)](https://smithery.ai)
+[![smithery badge](https://smithery.ai/badge/@samuelvinay91/autospectra-mcp-server)](https://smithery.ai/server/@samuelvinay91/autospectra-mcp-server)
 
 A powerful browser automation and testing server using the Model Context Protocol (MCP). AutoSpectra enables AI agents to control browsers, generate tests, and perform accessibility and visual testing with seamless cloud integration.
 
@@ -19,6 +20,14 @@ A powerful browser automation and testing server using the Model Context Protoco
 - **AI Integration**: Seamless connection with Smithery AI
 
 ## 🚀 Quick Start
+
+### Installing via Smithery
+
+To install autospectra-mcp-server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@samuelvinay91/autospectra-mcp-server):
+
+```bash
+npx -y @smithery/cli install @samuelvinay91/autospectra-mcp-server --client claude
+```
 
 ### Local Development
 
