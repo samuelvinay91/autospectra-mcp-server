@@ -1,6 +1,6 @@
-# Computer Use Tools
+# AI Agent Computer Use Capabilities
 
-AutoSpectra MCP server now includes Claude's computer use capabilities with a flexible, hybrid approach that supports both API-only and container-based implementations.
+AutoSpectra MCP server provides advanced computer use capabilities with a flexible, hybrid approach that supports both API-only and container-based implementations. While initially designed for Claude, our implementation works with any AI agent supporting the MCP protocol.
 
 ## Overview
 

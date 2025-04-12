@@ -186,7 +186,7 @@ export class AnthropicApiProvider implements ComputerUseProvider {
       
       const requestStart = Date.now();
       
-      // Use beta.messages.create to access advanced features
+      // Use messages.create with appropriate parameters for the SDK version
       const response = await this.client.beta.messages.create({
         model,
         // Ensure max_tokens is greater than thinking.budget_tokens (1024)

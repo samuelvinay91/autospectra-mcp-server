@@ -1,12 +1,9 @@
 // A simple script to test the AutoSpectra MCP Server
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { spawn } from 'child_process';
+const fs = require('fs');
+const path = require('path');
+const { spawn } = require('child_process');
 
-// Get directory name in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// __dirname is already available in CommonJS
 
 console.log('Starting AutoSpectra MCP Server test...');
 
@@ -15,7 +12,7 @@ function startServer() {
   console.log('Starting the MCP server...');
   
   // Path to the server executable
-  const serverPath = path.join(__dirname, 'build', 'index.js');
+  const serverPath = path.join(__dirname, '..', '..', 'build', 'index.js');
   
   // Make sure it's executable
   try {
@@ -60,11 +57,11 @@ setTimeout(() => {
   console.log('\n-----------------------------------');
   console.log('AutoSpectra MCP Server should now be running!');
   console.log('-----------------------------------');
-  console.log('To use it with Claude:');
-  console.log('1. Make sure the MCP settings are properly configured in:');
-  console.log('   c:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Code\\User\\globalStorage\\saoudrizwan.claude-dev\\settings\\cline_mcp_settings.json');
-  console.log('2. Restart Claude if needed');
-  console.log('3. Try using one of the AutoSpectra MCP tools');
+  console.log('To use it with any AI agent:');
+  console.log('1. Make sure the MCP settings are properly configured for your AI platform');
+  console.log('   Example (Claude): c:\\Users\\VINAY KUMAR\\AppData\\Roaming\\Code\\User\\globalStorage\\saoudrizwan.claude-dev\\settings\\cline_mcp_settings.json');
+  console.log('2. Restart your AI agent if needed');
+  console.log('3. Try using one of the AutoSpectra MCP tools from your AI agent');
   console.log('-----------------------------------');
   console.log('Example commands:');
   console.log('- List supported frameworks: use_mcp_tool with server_name "autospectra" and tool_name "list_frameworks"');

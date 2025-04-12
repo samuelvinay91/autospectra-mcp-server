@@ -18,7 +18,7 @@ export async function generateMochaTest(
   logger.info(`Generating Mocha test with style: ${style}, format: ${format}`);
   
   // Register Handlebars helpers
-  Handlebars.registerHelper('eq', function(a, b) {
+  Handlebars.registerHelper('eq', function(a: any, b: any) {
     return a === b;
   });
   

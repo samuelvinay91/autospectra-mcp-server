@@ -1,10 +1,10 @@
-# Claude Computer Use Integration with AutoSpectra MCP Server
+# AI Agent Computer Use Integration with AutoSpectra MCP Server
 
-This document explains how the Claude Computer Use capabilities are integrated with the AutoSpectra MCP Server and important limitations to be aware of.
+This document explains how Computer Use capabilities are integrated with the AutoSpectra MCP Server and important limitations to be aware of. While initially developed for Claude, our implementation is designed to work with any AI agent supporting the MCP protocol.
 
 ## Overview
 
-Claude's Computer Use capabilities allow Claude to use a virtual computer, including:
+The Computer Use capabilities allow AI agents to use a virtual computer, including:
 - Running applications
 - Navigating web browsers
 - Creating and editing files

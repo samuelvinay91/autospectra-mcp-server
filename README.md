@@ -2,19 +2,19 @@
 
 <div align="center">
   <img src="assets/logo.svg" alt="AutoSpectra Logo" width="200">
-  <p><strong>Browser Automation and Testing with Claude Computer Use Integration</strong></p>
+  <p><strong>Universal Browser Automation and Testing for All AI Agents</strong></p>
 </div>
 
-AutoSpectra is an MCP (Model Context Protocol) server that provides browser automation, testing, and Claude Computer Use integration capabilities. It enables advanced browser control with visible or headless modes, accessibility testing, and integration with Anthropic's Claude AI capabilities.
+AutoSpectra is an MCP (Model Context Protocol) server that provides browser automation and testing capabilities for any AI agent. It enables advanced browser control with visible or headless modes, accessibility testing, and seamless integration with any MCP-compatible system, including but not limited to Claude, ChatGPT, Gemini, and Perplexity.
 
 ## Features
 
 - **🌐 Browser Automation**: Navigate, click, type, extract data, and take screenshots
 - **🧪 Testing Tools**: End-to-end testing, accessibility testing, and visual validation
-- **🧠 Claude Integration**: Use Claude's Computer Use capabilities in your automation
+- **🤖 AI Agent Compatibility**: Works with any AI agent supporting the MCP protocol
 - **👁️ Visible Browser Mode**: Debug with visible browsers or run headless for efficiency
 - **🔄 Self-Healing Selectors**: Robust element selection that adapts to changes
-- **🔌 MCP Protocol**: Easy integration with Claude and other MCP-compatible systems
+- **🔌 Universal MCP Protocol**: Easy integration with any MCP-compatible AI system
 
 ## Installation
 
@@ -113,25 +113,26 @@ autospectra-mcp-server/
 │   └── e2e/             # End-to-end tests
 ```
 
-## Integration with Claude
+## Integration with AI Agents
 
-AutoSpectra integrates with Claude's Computer Use capabilities, allowing you to:
+AutoSpectra seamlessly integrates with any AI agent supporting the MCP protocol:
 
-1. Access Claude's virtual computer environment
-2. Perform browser automation and testing through Claude
-3. Combine local and cloud-based automation
+1. **Universal Compatibility**: Works with Claude, ChatGPT, Gemini, Perplexity, and more
+2. **Advanced Capabilities**: Access specialized features like Claude's Computer Use
+3. **Flexible Workflows**: Combine local and cloud-based automation
 
-See the [Computer Use Guide](docs/guides/computer-use/COMPUTER_USE.md) for more information.
+See the [AI Integration Guide](docs/guides/computer-use/COMPUTER_USE.md) for more information.
 
-## Integration with Cline
+## Platform Integrations
 
-AutoSpectra can be used alongside Cline's browser_action tools:
+AutoSpectra works with various AI platforms and development environments:
 
-1. Use Cline for exploratory testing and visual debugging
-2. Use AutoSpectra for programmatic testing with selectors
-3. Create powerful workflows combining both approaches
+1. **Claude Desktop/Cloud**: Enhanced automation with Computer Use capabilities
+2. **VS Code Extensions**: Seamless integration with development workflows
+3. **ChatGPT & OpenAI**: Full support for GPT-based assistants
+4. **Gemini & Other Models**: Compatible with all major AI platforms
 
-See the [Cline Integration Guide](docs/guides/browser/CLINE_BROWSER_INTEGRATION.md) for more information.
+See the [Platform Integration Guide](docs/guides/browser/CLINE_BROWSER_INTEGRATION.md) for more information.
 
 ## Docker Support
 

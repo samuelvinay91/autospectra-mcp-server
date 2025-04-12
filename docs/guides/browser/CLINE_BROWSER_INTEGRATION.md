@@ -1,6 +1,6 @@
-# Integrating Cline Browser Tools with AutoSpectra MCP Server
+# Integrating AI Platform Browser Tools with AutoSpectra MCP Server
 
-This document outlines how to leverage Cline's enhanced browser tools alongside AutoSpectra MCP server for improved development, debugging, and testing workflows.
+This document outlines how to leverage browser tools from various AI platforms alongside AutoSpectra MCP server for improved development, debugging, and testing workflows. While originally developed for Cline/Claude, these integration techniques work with any MCP-compatible AI platform.
 
 ## Overview of Browser Tool Options
 
