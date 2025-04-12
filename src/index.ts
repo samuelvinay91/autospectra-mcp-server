@@ -15,6 +15,8 @@ import { logger } from './utils/logger';
 import { visualTesting } from './automation/visualTesting';
 import { testRunner } from './utils/testRunner';
 import { startHttpServer } from './server';
+import { computerUseTools } from './computerUse/index';
+import { debuggingTools } from './debugging/index';
 
 class AutoSpectraServer {
   private server: Server;
@@ -261,6 +263,215 @@ class AutoSpectraServer {
             },
             required: ['testPath']
           }
+        },
+        // Computer use tools
+        {
+          name: 'initialize_computer',
+          description: 'Initialize a computer use provider',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              type: {
+                type: 'string',
+                description: 'Provider type: "api" (direct API call) or "container" (Docker container with full Linux environment)',
+                enum: ['api', 'container']
+              },
+              apiKey: {
+                type: 'string',
+                description: 'Optional Anthropic API key (will use environment variable if not provided)'
+              },
+              containerImage: {
+                type: 'string',
+                description: 'Optional container image to use (for container provider)'
+              },
+              width: {
+                type: 'number',
+                description: 'Optional screen width (for container provider)'
+              },
+              height: {
+                type: 'number',
+                description: 'Optional screen height (for container provider)'
+              }
+            },
+            required: ['type']
+          }
+        },
+        
+        // Interactive debug tools
+        {
+          name: 'debug_test',
+          description: 'Create or update a debug test session for interactive development',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              testName: {
+                type: 'string',
+                description: 'Name of the debug test'
+              },
+              testScript: {
+                type: 'string',
+                description: 'JavaScript test script containing step definitions'
+              },
+              runImmediately: {
+                type: 'boolean',
+                description: 'Whether to run the test immediately after creation'
+              },
+              breakAt: {
+                type: 'array',
+                items: {
+                  type: 'string'
+                },
+                description: 'Step IDs to break execution at'
+              },
+              clearPrevious: {
+                type: 'boolean',
+                description: 'Whether to clear any previous debug session with the same name'
+              }
+            },
+            required: ['testName']
+          }
+        },
+        {
+          name: 'run_debug_test',
+          description: 'Run a debug test',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              testName: {
+                type: 'string',
+                description: 'Name of the debug test to run'
+              },
+              fromStep: {
+                type: 'number',
+                description: 'Index of the step to start execution from'
+              },
+              toStep: {
+                type: 'number',
+                description: 'Index of the step to end execution at'
+              },
+              runToBreakpoint: {
+                type: 'boolean',
+                description: 'Whether to pause execution at breakpoints'
+              }
+            },
+            required: ['testName']
+          }
+        },
+        {
+          name: 'continue_debug_test',
+          description: 'Continue execution of a paused debug test',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              steps: {
+                type: 'number',
+                description: 'Number of steps to execute before pausing again'
+              },
+              runToBreakpoint: {
+                type: 'boolean',
+                description: 'Whether to pause execution at breakpoints'
+              }
+            }
+          }
+        },
+        {
+          name: 'modify_debug_step',
+          description: 'Add or modify a step in a debug test',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              stepId: {
+                type: 'string',
+                description: 'ID of the step to modify'
+              },
+              type: {
+                type: 'string',
+                description: 'Type of step (navigate, click, type, etc.)'
+              },
+              args: {
+                type: 'object',
+                description: 'Arguments for the step'
+              },
+              index: {
+                type: 'number',
+                description: 'Index to insert the step at (for new steps)'
+              },
+              runAfter: {
+                type: 'boolean',
+                description: 'Whether to run the step immediately after modification'
+              }
+            },
+            required: ['stepId', 'type', 'args']
+          }
+        },
+        {
+          name: 'get_debug_state',
+          description: 'Get the current debug state including steps, logs, and screenshots',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              includeStepResults: {
+                type: 'boolean',
+                description: 'Whether to include step results in the response'
+              }
+            }
+          }
+        },
+        {
+          name: 'cleanup_debug_session',
+          description: 'Clean up debug session resources',
+          inputSchema: {
+            type: 'object',
+            properties: {}
+          }
+        },
+        {
+          name: 'use_computer',
+          description: 'Use Claude computer capabilities to perform complex tasks',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              prompt: {
+                type: 'string',
+                description: 'Description of the computer task to perform'
+              },
+              model: {
+                type: 'string',
+                description: 'Claude model to use (default: claude-3-7-sonnet-20240307)'
+              }
+            },
+            required: ['prompt']
+          }
+        },
+        {
+          name: 'smart_computer_use',
+          description: 'Use computer capabilities with fallback to AutoSpectra automation tools',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              prompt: {
+                type: 'string',
+                description: 'Description of the computer task to perform'
+              },
+              useAutomation: {
+                type: 'boolean',
+                description: 'Whether to fall back to automation tools if computer use fails (default: true)'
+              },
+              model: {
+                type: 'string',
+                description: 'Claude model to use (default: claude-3-7-sonnet-20240307)'
+              }
+            },
+            required: ['prompt']
+          }
+        },
+        {
+          name: 'cleanup_computer',
+          description: 'Clean up computer use provider resources',
+          inputSchema: {
+            type: 'object',
+            properties: {}
+          }
         }
       ]
     }));
@@ -360,6 +571,83 @@ class AutoSpectraServer {
         
         if (name === 'list_frameworks') {
           return await testGenerationTools.listFrameworks();
+        }
+        
+        // Handle computer use tools
+        if (name === 'initialize_computer') {
+          return await computerUseTools.initializeProvider(args as { 
+            type: 'api' | 'container';
+            apiKey?: string;
+            containerImage?: string;
+            width?: number;
+            height?: number;
+          });
+        }
+        
+        if (name === 'use_computer') {
+          return await computerUseTools.useComputer(args as { 
+            prompt: string;
+            model?: string;
+          });
+        }
+        
+        if (name === 'smart_computer_use') {
+          return await computerUseTools.smartComputerUse(args as { 
+            prompt: string;
+            useAutomation?: boolean;
+            model?: string;
+          });
+        }
+        
+        if (name === 'cleanup_computer') {
+          return await computerUseTools.cleanupProvider();
+        }
+        
+        // Handle debugging tools
+        if (name === 'debug_test') {
+          return await debuggingTools.debug_test(args as {
+            testName: string;
+            testScript?: string;
+            runImmediately?: boolean;
+            breakAt?: string[];
+            clearPrevious?: boolean;
+          });
+        }
+        
+        if (name === 'run_debug_test') {
+          return await debuggingTools.run_debug_test(args as {
+            testName: string;
+            fromStep?: number;
+            toStep?: number;
+            runToBreakpoint?: boolean;
+          });
+        }
+        
+        if (name === 'continue_debug_test') {
+          return await debuggingTools.continue_debug_test(args as {
+            steps?: number;
+            runToBreakpoint?: boolean;
+          });
+        }
+        
+        if (name === 'modify_debug_step') {
+          return await debuggingTools.modify_debug_step(args as {
+            stepId: string;
+            type: string;
+            args: any;
+            index?: number;
+            runAfter?: boolean;
+          });
+        }
+        
+        if (name === 'get_debug_state') {
+          return await debuggingTools.get_debug_state(args as {
+            includeStepResults?: boolean;
+          });
+        }
+        
+        if (name === 'cleanup_debug_session') {
+          return await debuggingTools.cleanup_debug_session();
         }
 
         throw new McpError(

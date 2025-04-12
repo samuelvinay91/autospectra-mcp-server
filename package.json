@@ -1,29 +1,69 @@
 {
   "name": "autospectra-mcp-server",
   "version": "1.0.0",
+  "description": "AutoSpectra MCP Server for browser automation and Claude Computer Use integration",
   "main": "build/index.js",
   "scripts": {
-    "build": "tsc",
     "start": "node build/index.js",
     "dev": "ts-node src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "test": "node tests/integration/test-autospectra.js",
+    "test:api-key": "node tests/integration/test-api-key.js",
+    "test:accessibility": "node tests/integration/test-accessibility.js",
+    "test:computer-use": "node tests/integration/test-computer-use.js",
+    "test:browser-navigation": "node tests/integration/test-browser-navigation.js",
+    "test:claude-integration": "node tests/integration/test-claude-integration.js",
+    "test:e2e": "node tests/e2e/test-visible-browser.js",
+    "test:all": "npm run test && npm run test:api-key && npm run test:accessibility && npm run test:computer-use",
+    "deploy": "node scripts/deployment/standalone-http-server.js",
+    "docker:build": "docker build -t autospectra-mcp-server .",
+    "docker:run": "docker run -p 3000:3000 --env-file .env autospectra-mcp-server"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": [
+    "autospectra",
+    "automation",
+    "testing",
+    "browser",
+    "claude",
+    "mcp",
+    "computer-use"
+  ],
+  "author": "AutoSpectra Team",
+  "license": "MIT",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.9.0",
-    "axios": "^1.8.4",
-    "dotenv": "^16.4.7",
-    "express": "^5.1.0",
-    "fs-extra": "^11.3.0",
-    "handlebars": "^4.7.8",
-    "playwright": "^1.51.1",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "@anthropic-ai/sdk": "^0.14.0",
+    "@mcp/protocol": "^0.5.0",
+    "@modelcontextprotocol/sdk": "^0.0.7",
+    "axios": "^1.6.0",
+    "axe-core": "^4.8.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "playwright": "^1.39.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2",
+    "winston": "^3.11.0"
   },
   "devDependencies": {
-    "@types/express": "^5.0.1"
+    "@types/cors": "^2.8.15",
+    "@types/express": "^4.17.20",
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "@typescript-eslint/parser": "^6.9.1",
+    "eslint": "^8.52.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "prettier": "^3.0.3"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/autospectra-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/autospectra-mcp-server/issues"
   }
 }

@@ -12,13 +12,39 @@ export const automationTools = {
   /**
    * Navigate to a URL
    */
-  async navigate(args: { url: string }) {
+  async navigate(args: { url: string, visible?: boolean }) {
     try {
-      const { url } = args;
+      const { url, visible = false } = args;
+      
+      // Force a visible browser if requested
+      if (visible) {
+        await browserManager.closeBrowser(); // Close any existing browser
+        
+        // Log the current headless setting
+        console.log('[DEBUG] Current headless setting:', config.headless);
+        console.log('[DEBUG] Environment HEADLESS:', process.env.HEADLESS);
+        
+        // Force headless to false in a way that cannot be overridden
+        process.env.HEADLESS = 'false';
+        Object.defineProperty(config, 'headless', {
+          configurable: true,
+          get: function() { return false; }
+        });
+        
+        // Get a new browser with forced settings
+        const browser = await browserManager.getBrowser('chromium');
+        
+        // Log confirmation
+        console.log('[INFO] Forcing visible browser mode - HEADLESS is now:', config.headless);
+      }
       logger.info(`Navigating to: ${url}`);
       
       const page = await browserManager.getPage();
-      await page.goto(url, { waitUntil: 'domcontentloaded' });
+      // Increase timeout and use 'load' instead of 'domcontentloaded' for more complete page loading
+      await page.goto(url, { 
+        waitUntil: 'load', 
+        timeout: 60000  // Increase timeout to 60 seconds
+      });
       
       // Take a screenshot after navigation
       const screenshotBuffer = await page.screenshot({ fullPage: false });
@@ -52,9 +78,21 @@ export const automationTools = {
   /**
    * Click on an element
    */
-  async click(args: { selector: string }) {
+  async click(args: { selector: string, visible?: boolean }) {
     try {
-      const { selector } = args;
+      const { selector, visible = false } = args;
+      
+      // Force a visible browser if requested
+      if (visible) {
+        // Force headless to false in a way that cannot be overridden
+        process.env.HEADLESS = 'false';
+        Object.defineProperty(config, 'headless', {
+          configurable: true,
+          get: function() { return false; }
+        });
+        
+        console.log('[INFO] Forcing visible browser mode for click operation');
+      }
       logger.info(`Clicking element: ${selector}`);
       
       const page = await browserManager.getPage();
@@ -101,9 +139,21 @@ export const automationTools = {
   /**
    * Type text into an input field
    */
-  async type(args: { selector: string; text: string; clearFirst?: boolean }) {
+  async type(args: { selector: string; text: string; clearFirst?: boolean; visible?: boolean }) {
     try {
-      const { selector, text, clearFirst = false } = args;
+      const { selector, text, clearFirst = false, visible = false } = args;
+      
+      // Force a visible browser if requested
+      if (visible) {
+        // Force headless to false in a way that cannot be overridden
+        process.env.HEADLESS = 'false';
+        Object.defineProperty(config, 'headless', {
+          configurable: true,
+          get: function() { return false; }
+        });
+        
+        console.log('[INFO] Forcing visible browser mode for typing operation');
+      }
       logger.info(`Typing "${text}" into element: ${selector}`);
       
       const page = await browserManager.getPage();
@@ -154,9 +204,21 @@ export const automationTools = {
   /**
    * Extract data from an element
    */
-  async extract(args: { selector: string; attribute?: string }) {
+  async extract(args: { selector: string; attribute?: string; visible?: boolean }) {
     try {
-      const { selector, attribute = 'textContent' } = args;
+      const { selector, attribute = 'textContent', visible = false } = args;
+      
+      // Force a visible browser if requested
+      if (visible) {
+        // Force headless to false in a way that cannot be overridden
+        process.env.HEADLESS = 'false';
+        Object.defineProperty(config, 'headless', {
+          configurable: true,
+          get: function() { return false; }
+        });
+        
+        console.log('[INFO] Forcing visible browser mode for extraction operation');
+      }
       logger.info(`Extracting ${attribute} from element: ${selector}`);
       
       const page = await browserManager.getPage();
@@ -223,9 +285,18 @@ export const automationTools = {
   /**
    * Take a screenshot
    */
-  async screenshot(args: { fullPage?: boolean } = {}) {
+  async screenshot(args: { fullPage?: boolean, visible?: boolean } = {}) {
     try {
-      const { fullPage = false } = args;
+      const { fullPage = false, visible = false } = args;
+      
+      // Force a visible browser if requested
+      if (visible) {
+        // Ensure the browser is visible regardless of config
+        Object.defineProperty(config, 'headless', {
+          get: function() { return false; }
+        });
+        console.log('[INFO] Forcing visible browser mode for screenshot');
+      }
       logger.info(`Taking ${fullPage ? 'full page' : 'viewport'} screenshot`);
       
       const page = await browserManager.getPage();
@@ -262,10 +333,23 @@ export const automationTools = {
    */
   async checkAccessibility(args: { 
     rules?: string[],
-    includeHidden?: boolean
+    includeHidden?: boolean,
+    visible?: boolean
   } = {}) {
     try {
-      const { rules, includeHidden = false } = args;
+      const { rules, includeHidden = false, visible = false } = args;
+      
+      // Force a visible browser if requested
+      if (visible) {
+        // Force headless to false in a way that cannot be overridden
+        process.env.HEADLESS = 'false';
+        Object.defineProperty(config, 'headless', {
+          configurable: true,
+          get: function() { return false; }
+        });
+        
+        console.log('[INFO] Forcing visible browser mode for accessibility testing');
+      }
       
       logger.info('Running accessibility tests on current page');
       
