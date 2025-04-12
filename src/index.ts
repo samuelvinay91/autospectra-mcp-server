@@ -246,6 +246,115 @@ class AutoSpectraServer {
             properties: {}
           }
         },
+        // API testing tools
+        {
+          name: 'api_request',
+          description: 'Make an HTTP request to an API endpoint',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              method: {
+                type: 'string',
+                description: 'HTTP method (GET, POST, PUT, DELETE)'
+              },
+              url: {
+                type: 'string',
+                description: 'API endpoint URL'
+              },
+              headers: {
+                type: 'object',
+                description: 'Request headers'
+              },
+              data: {
+                type: 'object',
+                description: 'Request body'
+              },
+              params: {
+                type: 'object',
+                description: 'URL parameters'
+              },
+              auth: {
+                type: 'object',
+                description: 'Authentication details'
+              }
+            },
+            required: ['method', 'url']
+          }
+        },
+        {
+          name: 'validate_schema',
+          description: 'Validate API responses against schemas',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              response: {
+                type: 'object',
+                description: 'API response to validate'
+              },
+              schema: {
+                type: 'object',
+                description: 'JSON schema to validate against'
+              },
+              schemaPath: {
+                type: 'string',
+                description: 'Path to schema file'
+              }
+            },
+            required: ['response']
+          }
+        },
+        {
+          name: 'create_mock',
+          description: 'Create mock API endpoints for testing',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              endpoint: {
+                type: 'string',
+                description: 'Endpoint path to mock'
+              },
+              method: {
+                type: 'string',
+                description: 'HTTP method'
+              },
+              response: {
+                type: 'object',
+                description: 'Mock response'
+              },
+              statusCode: {
+                type: 'number',
+                description: 'Response status code'
+              }
+            },
+            required: ['endpoint', 'method', 'response']
+          }
+        },
+        {
+          name: 'graphql_request',
+          description: 'Make GraphQL requests',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              endpoint: {
+                type: 'string',
+                description: 'GraphQL API endpoint'
+              },
+              query: {
+                type: 'string',
+                description: 'GraphQL query'
+              },
+              variables: {
+                type: 'object',
+                description: 'Query variables'
+              },
+              headers: {
+                type: 'object',
+                description: 'Request headers'
+              }
+            },
+            required: ['endpoint', 'query']
+          }
+        },
         {
           name: 'run_test',
           description: 'Run a generated test file',
@@ -571,6 +680,59 @@ class AutoSpectraServer {
         
         if (name === 'list_frameworks') {
           return await testGenerationTools.listFrameworks();
+        }
+        
+        // Handle API testing tools
+        if (name === 'api_request') {
+          return await automationTools.apiRequest(args as {
+            method: string;
+            url: string;
+            headers?: Record<string, string>;
+            data?: any;
+            params?: Record<string, string>;
+            auth?: {
+              username?: string;
+              password?: string;
+              token?: string;
+              type?: 'basic' | 'bearer' | 'none';
+            };
+            validateStatus?: boolean;
+            timeout?: number;
+            baseURL?: string;
+            ignoreHTTPSErrors?: boolean;
+          });
+        }
+        
+        if (name === 'validate_schema') {
+          return await automationTools.validateSchema(args as {
+            response: any;
+            schema: any;
+            schemaPath?: string;
+          });
+        }
+        
+        if (name === 'create_mock') {
+          return await automationTools.createMock(args as {
+            endpoint: string;
+            method: string;
+            response: any;
+            statusCode?: number;
+          });
+        }
+        
+        if (name === 'graphql_request') {
+          return await automationTools.graphqlRequest(args as {
+            endpoint: string;
+            query: string;
+            variables?: Record<string, any>;
+            headers?: Record<string, string>;
+            auth?: {
+              username?: string;
+              password?: string;
+              token?: string;
+              type?: 'basic' | 'bearer' | 'none';
+            };
+          });
         }
         
         // Handle computer use tools

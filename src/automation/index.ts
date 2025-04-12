@@ -4,6 +4,7 @@ import path from 'path';
 import fs from 'fs';
 import { config } from '../utils/config';
 import { accessibilityTesting } from './accessibilityTesting';
+import { apiTesting } from './apiTesting';
 
 /**
  * Automation tools for browser interaction
@@ -419,5 +420,69 @@ export const automationTools = {
         isError: true
       };
     }
+  },
+
+  /**
+   * Make an HTTP request to an API endpoint
+   */
+  async apiRequest(args: {
+    method: string;
+    url: string;
+    headers?: Record<string, string>;
+    data?: any;
+    params?: Record<string, string>;
+    auth?: {
+      username?: string;
+      password?: string;
+      token?: string;
+      type?: 'basic' | 'bearer' | 'none';
+    };
+    validateStatus?: boolean;
+    timeout?: number;
+    baseURL?: string;
+    ignoreHTTPSErrors?: boolean;
+  }) {
+    return await apiTesting.apiRequest(args);
+  },
+
+  /**
+   * Validate an API response against a schema
+   */
+  async validateSchema(args: {
+    response: any;
+    schema: any;
+    schemaPath?: string;
+  }) {
+    return await apiTesting.validateSchema(args);
+  },
+
+  /**
+   * Create a mock API endpoint for testing
+   */
+  async createMock(args: {
+    endpoint: string;
+    method: string;
+    response: any;
+    statusCode?: number;
+  }) {
+    return await apiTesting.createMock(args);
+  },
+
+  /**
+   * Make a GraphQL request
+   */
+  async graphqlRequest(args: {
+    endpoint: string;
+    query: string;
+    variables?: Record<string, any>;
+    headers?: Record<string, string>;
+    auth?: {
+      username?: string;
+      password?: string;
+      token?: string;
+      type?: 'basic' | 'bearer' | 'none';
+    };
+  }) {
+    return await apiTesting.graphqlRequest(args);
   }
 };

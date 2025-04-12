@@ -226,6 +226,146 @@ For each tool you want to expose to your Smithery AI agent, define the input sch
 }
 ```
 
+#### API Request Tool
+
+```json
+{
+  "name": "api_request",
+  "description": "Make an HTTP request to an API endpoint",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "method": {
+        "type": "string",
+        "description": "HTTP method (GET, POST, PUT, DELETE, etc.)"
+      },
+      "url": {
+        "type": "string",
+        "description": "API endpoint URL"
+      },
+      "headers": {
+        "type": "object",
+        "description": "Request headers"
+      },
+      "data": {
+        "type": "object",
+        "description": "Request body data"
+      },
+      "params": {
+        "type": "object",
+        "description": "URL parameters"
+      },
+      "auth": {
+        "type": "object",
+        "description": "Authentication details"
+      },
+      "validateStatus": {
+        "type": "boolean",
+        "description": "Whether to validate the status code"
+      },
+      "timeout": {
+        "type": "number",
+        "description": "Request timeout in milliseconds"
+      }
+    },
+    "required": ["method", "url"]
+  }
+}
+```
+
+#### Validate Schema Tool
+
+```json
+{
+  "name": "validate_schema",
+  "description": "Validate an API response against a JSON schema",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "response": {
+        "type": "object",
+        "description": "API response to validate"
+      },
+      "schema": {
+        "type": "object",
+        "description": "JSON schema to validate against"
+      },
+      "schemaPath": {
+        "type": "string",
+        "description": "Path to schema file"
+      }
+    },
+    "required": ["response"]
+  }
+}
+```
+
+#### Create Mock Tool
+
+```json
+{
+  "name": "create_mock",
+  "description": "Create a mock API endpoint for testing",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "endpoint": {
+        "type": "string",
+        "description": "Endpoint path to mock"
+      },
+      "method": {
+        "type": "string",
+        "description": "HTTP method"
+      },
+      "response": {
+        "type": "object",
+        "description": "Mock response"
+      },
+      "statusCode": {
+        "type": "number",
+        "description": "Response status code"
+      }
+    },
+    "required": ["endpoint", "method", "response"]
+  }
+}
+```
+
+#### GraphQL Request Tool
+
+```json
+{
+  "name": "graphql_request",
+  "description": "Make a GraphQL request",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "endpoint": {
+        "type": "string",
+        "description": "GraphQL API endpoint"
+      },
+      "query": {
+        "type": "string",
+        "description": "GraphQL query"
+      },
+      "variables": {
+        "type": "object",
+        "description": "Query variables"
+      },
+      "headers": {
+        "type": "object",
+        "description": "Request headers"
+      },
+      "auth": {
+        "type": "object",
+        "description": "Authentication details"
+      }
+    },
+    "required": ["endpoint", "query"]
+  }
+}
+```
+
 #### Generate Tests Tool
 
 ```json

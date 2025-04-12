@@ -73,10 +73,66 @@ app.post('/api/tools/cleanup_computer', (req, res) => {
   });
 });
 
+// API testing endpoints
+app.post('/api/tools/api_request', (req, res) => {
+  console.log('API request:', req.body);
+  res.status(200).json({
+    content: [{ 
+      type: 'text', 
+      text: `Executed API request: ${req.body.method} ${req.body.url}` 
+    }]
+  });
+});
+
+app.post('/api/tools/validate_schema', (req, res) => {
+  console.log('Schema validation request:', req.body);
+  res.status(200).json({
+    content: [{ 
+      type: 'text', 
+      text: 'Schema validation passed successfully' 
+    }]
+  });
+});
+
+app.post('/api/tools/create_mock', (req, res) => {
+  console.log('Create mock request:', req.body);
+  res.status(200).json({
+    content: [{ 
+      type: 'text', 
+      text: `API Mock created (simulated):\nEndpoint: ${req.body.endpoint}\nMethod: ${req.body.method.toUpperCase()}\nStatus Code: ${req.body.statusCode || 200}` 
+    }]
+  });
+});
+
+app.post('/api/tools/graphql_request', (req, res) => {
+  console.log('GraphQL request:', req.body);
+  res.status(200).json({
+    content: [{ 
+      type: 'text', 
+      text: `Executed GraphQL request to ${req.body.endpoint}` 
+    }]
+  });
+});
+
 // Available tools endpoint
 app.get('/api/tools', (req, res) => {
   res.status(200).json({
     tools: [
+      // Browser automation tools
+      'navigate', 
+      'click', 
+      'type', 
+      'extract', 
+      'screenshot', 
+      'check_accessibility',
+      
+      // API testing tools
+      'api_request',
+      'validate_schema',
+      'create_mock',
+      'graphql_request',
+      
+      // Computer use tools
       'initialize_computer',
       'use_computer',
       'smart_computer_use',
@@ -91,6 +147,18 @@ app.listen(PORT, () => {
   console.log('Try these endpoints:');
   console.log(`- GET  http://localhost:${PORT}/health`);
   console.log(`- GET  http://localhost:${PORT}/api/tools`);
+  
+  // Browser automation tools
+  console.log(`- POST http://localhost:${PORT}/api/tools/navigate`);
+  console.log(`- POST http://localhost:${PORT}/api/tools/click`);
+  
+  // API testing tools
+  console.log(`- POST http://localhost:${PORT}/api/tools/api_request`);
+  console.log(`- POST http://localhost:${PORT}/api/tools/validate_schema`);
+  console.log(`- POST http://localhost:${PORT}/api/tools/create_mock`);
+  console.log(`- POST http://localhost:${PORT}/api/tools/graphql_request`);
+  
+  // Computer use tools
   console.log(`- POST http://localhost:${PORT}/api/tools/initialize_computer`);
   console.log(`- POST http://localhost:${PORT}/api/tools/use_computer`);
 });

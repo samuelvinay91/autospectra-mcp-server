@@ -47,6 +47,8 @@ export function startHttpServer(): Server | null {
       tools: [
         // Browser automation tools
         'navigate', 'click', 'type', 'extract', 'screenshot', 'check_accessibility',
+        // API testing tools
+        'api_request', 'validate_schema', 'create_mock', 'graphql_request',
         // Test generation tools
         'generate_tests', 'ai_process', 'list_frameworks', 'run_test',
         // Visual testing tools
@@ -105,6 +107,59 @@ export function startHttpServer(): Server | null {
       res.status(200).json(result);
     } catch (error: any) {
       logger.error('Error cleaning up computer provider:', error);
+      res.status(500).json({
+        content: [{ type: 'text', text: `Error: ${error.message || 'Unknown error'}` }],
+        isError: true
+      });
+    }
+  });
+  
+  // API testing tools
+  app.post('/api/tools/api_request', async (req: Request, res: Response) => {
+    try {
+      const result = await automationTools.apiRequest(req.body);
+      res.status(200).json(result);
+    } catch (error: any) {
+      logger.error('Error making API request:', error);
+      res.status(500).json({
+        content: [{ type: 'text', text: `Error: ${error.message || 'Unknown error'}` }],
+        isError: true
+      });
+    }
+  });
+  
+  app.post('/api/tools/validate_schema', async (req: Request, res: Response) => {
+    try {
+      const result = await automationTools.validateSchema(req.body);
+      res.status(200).json(result);
+    } catch (error: any) {
+      logger.error('Error validating schema:', error);
+      res.status(500).json({
+        content: [{ type: 'text', text: `Error: ${error.message || 'Unknown error'}` }],
+        isError: true
+      });
+    }
+  });
+  
+  app.post('/api/tools/create_mock', async (req: Request, res: Response) => {
+    try {
+      const result = await automationTools.createMock(req.body);
+      res.status(200).json(result);
+    } catch (error: any) {
+      logger.error('Error creating mock API:', error);
+      res.status(500).json({
+        content: [{ type: 'text', text: `Error: ${error.message || 'Unknown error'}` }],
+        isError: true
+      });
+    }
+  });
+  
+  app.post('/api/tools/graphql_request', async (req: Request, res: Response) => {
+    try {
+      const result = await automationTools.graphqlRequest(req.body);
+      res.status(200).json(result);
+    } catch (error: any) {
+      logger.error('Error making GraphQL request:', error);
       res.status(500).json({
         content: [{ type: 'text', text: `Error: ${error.message || 'Unknown error'}` }],
         isError: true

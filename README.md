@@ -1,8 +1,10 @@
 # AutoSpectra MCP Server
 
 <div align="center">
-  <img src="assets/logo.svg" alt="AutoSpectra Logo" width="200">
+  <img src="assets/logo.png" alt="AutoSpectra Logo" width="200">
   <p><strong>Universal Browser Automation and Testing for All AI Agents</strong></p>
+  
+  [![smithery badge](https://smithery.ai/badge/@samuelvinay91/autospectra-mcp-server)](https://smithery.ai/server/@samuelvinay91/autospectra-mcp-server)
 </div>
 
 AutoSpectra is an MCP (Model Context Protocol) server that provides browser automation and testing capabilities for any AI agent. It enables advanced browser control with visible or headless modes, accessibility testing, and seamless integration with any MCP-compatible system, including but not limited to Claude, ChatGPT, Gemini, and Perplexity.
@@ -90,6 +92,14 @@ await use_mcp_tool({
 ```
 
 See the [Usage Guide](docs/api/tools/USAGE_GUIDE.md) for more examples.
+
+## Documentation
+
+AutoSpectra provides comprehensive documentation of its tooling capabilities:
+
+- [Tools Documentation Index](docs/MCP_TOOLS_INDEX.md) - Overview and index of all tools documentation
+- [Current Tools List](docs/CURRENT_TOOLS_LIST.md) - Complete reference of all currently available tools with parameters and examples
+- [Future Tool Enhancements](docs/FUTURE_TOOL_ENHANCEMENTS.md) - Roadmap of planned enhancements and missing tools
 
 ## Project Structure
 
