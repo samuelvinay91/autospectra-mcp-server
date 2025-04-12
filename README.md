@@ -2,21 +2,23 @@
 
 <div align="center">
   <img src="assets/logo.png" alt="AutoSpectra Logo" width="200">
-  <p><strong>Universal Browser Automation and Testing for All AI Agents</strong></p>
+  <p><strong>All-In-One Automation Platform for AI Agents: Browser, API Testing, and More</strong></p>
   
   [![smithery badge](https://smithery.ai/badge/@samuelvinay91/autospectra-mcp-server)](https://smithery.ai/server/@samuelvinay91/autospectra-mcp-server)
 </div>
 
-AutoSpectra is an MCP (Model Context Protocol) server that provides browser automation and testing capabilities for any AI agent. It enables advanced browser control with visible or headless modes, accessibility testing, and seamless integration with any MCP-compatible system, including but not limited to Claude, ChatGPT, Gemini, and Perplexity.
+AutoSpectra is a comprehensive MCP (Model Context Protocol) server that provides complete automation and testing capabilities for any AI agent. From browser automation and API testing to debugging tools and mock services, AutoSpectra offers a full suite of tools that integrate seamlessly with any MCP-compatible system, including but not limited to Claude, ChatGPT, Gemini, and Perplexity.
 
 ## Features
 
 - **🌐 Browser Automation**: Navigate, click, type, extract data, and take screenshots
-- **🧪 Testing Tools**: End-to-end testing, accessibility testing, and visual validation
+- **🔌 API Testing Tools**: Make HTTP/GraphQL requests, validate schemas, create mock APIs
+- **🧪 Testing Framework**: End-to-end testing, accessibility testing, and visual validation
+- **🐞 Debugging Capabilities**: Interactive debug sessions with step-by-step execution
 - **🤖 AI Agent Compatibility**: Works with any AI agent supporting the MCP protocol
 - **👁️ Visible Browser Mode**: Debug with visible browsers or run headless for efficiency
 - **🔄 Self-Healing Selectors**: Robust element selection that adapts to changes
-- **🔌 Universal MCP Protocol**: Easy integration with any MCP-compatible AI system
+- **💻 Claude Computer Use**: Integration with Anthropic's Claude computer capabilities
 
 ## Installation
 
@@ -67,7 +69,9 @@ npm run dev
 
 ### Using the MCP Tools
 
-The server provides browser automation tools that can be used through the MCP protocol:
+AutoSpectra provides a wide range of automation tools that can be used through the MCP protocol:
+
+#### Browser Automation
 
 ```javascript
 // Navigate to a URL with visible browser
@@ -85,13 +89,70 @@ await use_mcp_tool({
   server_name: "autospectra",
   tool_name: "click",
   arguments: {
-    selector: "#login-button",
-    visible: true
+    selector: "#login-button"
   }
 });
 ```
 
-See the [Usage Guide](docs/api/tools/USAGE_GUIDE.md) for more examples.
+#### API Testing
+
+```javascript
+// Make an HTTP request
+await use_mcp_tool({
+  server_name: "autospectra",
+  tool_name: "api_request",
+  arguments: {
+    method: "GET",
+    url: "https://api.example.com/users/1",
+    headers: {
+      "Accept": "application/json"
+    }
+  }
+});
+
+// Validate an API response against a schema
+await use_mcp_tool({
+  server_name: "autospectra",
+  tool_name: "validate_schema",
+  arguments: {
+    response: responseData,
+    schema: {
+      type: "object",
+      required: ["id", "name", "email"],
+      properties: {
+        id: { type: "number" },
+        name: { type: "string" },
+        email: { type: "string", format: "email" }
+      }
+    }
+  }
+});
+```
+
+#### Interactive Debugging
+
+```javascript
+// Create a debug test session
+await use_mcp_tool({
+  server_name: "autospectra",
+  tool_name: "debug_test",
+  arguments: {
+    testName: "login-flow",
+    testScript: `
+      step('step1', 'navigate', { url: 'https://example.com/login' });
+      step('step2', 'type', { selector: '#username', text: 'testuser' });
+      step('step3', 'click', { selector: '#login-button' });
+    `,
+    breakAt: ['step3'],
+    runImmediately: true
+  }
+});
+```
+
+For complete documentation of all available tools and their parameters, see:
+- [Usage Guide](docs/api/tools/USAGE_GUIDE.md)
+- [API Testing Guide](docs/guides/API_TESTING_GUIDE.md)
+- [Current Tools List](docs/CURRENT_TOOLS_LIST.md)
 
 ## Documentation
 

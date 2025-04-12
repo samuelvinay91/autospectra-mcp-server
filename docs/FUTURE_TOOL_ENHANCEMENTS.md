@@ -2,14 +2,16 @@
 
 This document outlines critical missing tools and enhancement opportunities for the AutoSpectra MCP server. These recommendations aim to make the server unbeatable for QA, development, product management, and other teams building comprehensive test suites.
 
-## API Testing Tools
+## ✅ API Testing Tools (Implemented)
 
-| Proposed Tool | Description | Potential Parameters |
+| Implemented Tool | Description | Parameters |
 |---------------|-------------|----------------------|
-| `api_request` | Make HTTP requests to test APIs | `method` (string): HTTP method (GET, POST, PUT, DELETE)<br>`url` (string): API endpoint<br>`headers` (object): Request headers<br>`body` (object): Request body<br>`auth` (object): Authentication details |
-| `api_schema_validation` | Validate API responses against schemas | `response` (object): API response to validate<br>`schema` (object/string): OpenAPI/JSON schema or path to schema file |
-| `api_mock` | Create mock API endpoints for testing | `path` (string): Endpoint path to mock<br>`method` (string): HTTP method<br>`response` (object): Mock response<br>`statusCode` (number): Response status code |
-| `graphql_request` | Specialized GraphQL API testing | `endpoint` (string): GraphQL endpoint<br>`query` (string): GraphQL query<br>`variables` (object): Query variables |
+| `api_request` | Make HTTP requests to test APIs | `method` (string): HTTP method (GET, POST, PUT, DELETE)<br>`url` (string): API endpoint<br>`headers` (object): Request headers<br>`data` (object): Request body<br>`params` (object): URL parameters<br>`auth` (object): Authentication details<br>`timeout` (number): Request timeout |
+| `validate_schema` | Validate API responses against schemas | `response` (object): API response to validate<br>`schema` (object): JSON schema to validate against<br>`schemaPath` (string): Path to schema file |
+| `create_mock` | Create mock API endpoints for testing | `endpoint` (string): Endpoint path to mock<br>`method` (string): HTTP method<br>`response` (object): Mock response<br>`statusCode` (number): Response status code |
+| `graphql_request` | Specialized GraphQL API testing | `endpoint` (string): GraphQL endpoint<br>`query` (string): GraphQL query<br>`variables` (object): Query variables<br>`headers` (object): Request headers<br>`auth` (object): Authentication details |
+
+These tools are now fully implemented and available in the current version of AutoSpectra MCP Server. See [API_TESTING_GUIDE.md](guides/API_TESTING_GUIDE.md) for usage details.
 
 ## Database Integration
 

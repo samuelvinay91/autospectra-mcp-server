@@ -11,6 +11,7 @@ AutoSpectra is an MCP (Model Context Protocol) server that provides browser auto
 The [Current Tools List](CURRENT_TOOLS_LIST.md) provides a comprehensive reference guide to all tools currently available in the AutoSpectra MCP server:
 
 - **Browser Automation Tools**: Navigate to URLs, click elements, type text, extract data, take screenshots, and run accessibility tests
+- **API Testing Tools**: Make HTTP/GraphQL requests, validate schemas, create mock APIs, and test API endpoints
 - **Testing Tools**: Generate tests, process tasks with AI, record test sessions, perform visual comparisons, and run tests
 - **Debugging Tools**: Create and manage debug test sessions with interactive controls and state management
 - **Computer Use Tools**: Leverage Claude's computer capabilities with API and container-based implementations
