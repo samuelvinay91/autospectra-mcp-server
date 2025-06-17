@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/samuelvinay91-autospectra-mcp-server-badge.png)](https://mseep.ai/app/samuelvinay91-autospectra-mcp-server)
+
 # AutoSpectra MCP Server
 
 <div align="center">
